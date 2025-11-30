@@ -1,57 +1,123 @@
-# Service App (Cadastro de Serviços)
+📱 Service App — Cadastro de Ordens de Serviço
 
-Aplicativo Flutter simples para cadastrar ordens de serviço com os campos solicitados:
+Aplicação Flutter desenvolvida para gerenciamento completo de ordens de serviço, com persistência local via SQLite, filtros avançados, controle de status e exportação de dados.
+Ideal para uso interno em assistências técnicas, suporte, manutenção e prestação de serviços.
 
-- `id` (autoincrement)
-- `date` (ex: 27/11/2025)
-- `clientName` (ex: JOAO DA SILVA)
-- `deviceName` (ex: TV LG 52)
-- `serialNumber` (ex: 00205561EF45)
-- `reason` (ex: NÃO LIGA)
-- `servicePerformed` (ex: TROCA DA PLACA LOGICA)
-- `value` (ex: 300.00)
-- `status` (string: `pending` | `finalized` | `cancelled`)
+🚀 Funcionalidades Principais
+✔️ CRUD Completo
 
-O app usa `sqflite` para armazenamento local e tem listagem dos serviços cadastrados. Internamente foi adicionada uma coluna `status` (texto) para permitir os estados `Pendente`/`Finalizado`/`Cancelado` — versões antigas que usavam o campo booleano `finalized` são migradas automaticamente.
+Criar, visualizar, atualizar e excluir ordens de serviço.
 
-Como usar
+✔️ Controle de Status
 
-1. Instale o Flutter SDK: https://flutter.dev/docs/get-started/install
-2. No PowerShell, navegue para a pasta do projeto:
+Sistema visual intuitivo:
 
-```powershell
-cd "C:\Users\Sheila\Documents\trabalhoSubstitutiva\service_app"
-```
+🟡 Pendente — Estado inicial.
 
-3. Baixe dependências:
+🟢 Finalizado — Serviço concluído.
 
-```powershell
+🔴 Cancelado — Mantido no histórico, sem possibilidade de finalizar.
+
+✔️ Banco de Dados Local (SQLite)
+
+Persistência offline usando sqflite.
+
+Sistema de migração automática da estrutura legada (coluna finalized) para o novo campo status.
+
+✔️ Busca Avançada (SearchDelegate)
+
+Pesquisa por:
+
+Nome do Cliente
+
+Nome do Aparelho
+
+Número de Série
+
+Serviço Realizado
+
+ID da OS
+
+✔️ Filtros e Ordenação
+
+Filtrar por status: Todos | Finalizados | Pendentes
+
+Ordenar por data: Mais Recentes | Mais Antigas
+
+✔️ Exportação para CSV
+
+Exporta toda a base local para um arquivo .csv
+
+Arquivo salvo no diretório de documentos do dispositivo
+
+✔️ Interface Moderna
+
+Design limpo usando Google Fonts (Inter)
+
+Ações intuitivas como deslizar para excluir (Dismissible)
+
+🛠️ Tecnologias Utilizadas
+Tecnologia / Biblioteca	Uso
+Flutter & Dart	Base do aplicativo
+sqflite	Banco de dados SQLite local
+path_provider	Acesso ao sistema de arquivos
+intl	Formatação de datas
+google_fonts	Fonte Inter utilizada no UI
+🗂️ Estrutura da Tabela (services)
+Campo	Tipo	Descrição
+id	INTEGER	Chave primária (autoincremento)
+date	TEXT	Data de entrada (dd/MM/yyyy)
+clientName	TEXT	Nome do cliente
+deviceName	TEXT	Modelo do aparelho
+serialNumber	TEXT	Número de série
+reason	TEXT	Motivo/defeito relatado
+servicePerformed	TEXT	Serviço executado
+value	REAL	Valor do serviço
+status	TEXT	pending, finalized, cancelled
+🔄 Migração Automática
+
+Caso o banco seja detectado na versão 1, contendo o campo finalized, ele é automaticamente convertido para o novo campo status.
+
+📦 Instalação e Execução
+✔️ Pré-requisitos
+
+Flutter SDK configurado
+
+Emulador ou dispositivo físico conectado
+
+🔧 Clonar o projeto
+git clone https://github.com/Sheila724/trabalhoLddm.git
+cd trabalhoLddm
+
+📦 Instalar dependências
 flutter pub get
-```
 
-4. Rode no emulador ou dispositivo conectando um aparelho:
-
-```powershell
+▶️ Executar
 flutter run
-```
 
-**Observações**
+⚠️ Configuração Específica do Android
 
-- **Arquivos principais:**
-  - `lib/main.dart` — inicialização
-  - `lib/models/service.dart` — modelo de dados (agora com `status`)
-  - `lib/db/db_helper.dart` — acesso ao SQLite e migração para coluna `status`
-  - `lib/pages/home_page.dart` — listagem, filtros, exportação e ações sobre cada registro (exibe status colorido)
-  - `lib/pages/add_service_page.dart` — formulário de cadastro/edição (agora permite escolher `Pendente|Finalizado|Cancelado`)
-  - `lib/utils/csv_exporter.dart` — utilitário para exportar CSV (agora inclui coluna `status`)
+O projeto define manualmente a versão do NDK no arquivo:
 
-**Novas funcionalidades e mudanças importantes**
+android/app/build.gradle.kts
 
-- **Campo `status`:** substitui o uso exclusivo do booleano `finalized`. Valores possíveis: `pending`, `finalized`, `cancelled`. Aplicações antigas que tinham `finalized` serão migradas automaticamente na primeira execução.
-- **Formulário:** o formulário de cadastro/edição (`Add Service`) possui um `Dropdown` para escolher o `status` explicitamente.
-- **Listagem:** cada item mostra o status com cor: verde = Finalizado, amarelo = Pendente, vermelho = Cancelado. Itens marcados como `Cancelado` não mostram o checkbox de finalização (aparecem apenas com o texto vermelho).
-- **CSV:** o exportador adiciona a coluna `status` ao CSV (mantendo também a coluna legada `finalized` como 0/1 para compatibilidade).
-- **Migração de banco:** o app atualiza o esquema do banco para incluir `status` (versão do DB incrementada). Há lógica para manter compatibilidade com bases antigas.
-- **Android NDK:** Para builds Android, foi fixado `ndkVersion = "27.0.12077973"` em `android/app/build.gradle.kts` para compatibilidade com alguns plugins (`path_provider_android`, `sqflite_android`). Se ocorrer erro relacionado ao NDK, adicione/ajuste essa propriedade.
 
-Se quiser que eu adicione mais recursos (ex.: ordenação por data, exportar para local externo, sincronização com servidor ou geração de APK), responda com o que prefere.
+Versão usada:
+
+ndkVersion = "27.0.12077973"
+
+
+Caso apareça erro referente ao NDK, instale esta versão pelo
+Android Studio → SDK Manager → SDK Tools → NDK (Side by side).
+
+📂 Estrutura do Projeto
+lib/
+├── main.dart               # Ponto de entrada
+├── models/                 # Models (ORM)
+├── db/                     # Singleton + scripts de migração
+├── pages/                  # Telas (Lista e Formulário)
+└── utils/                  # Exportação CSV e utilitários
+
+💙 Desenvolvido com Flutter
+
+Projeto acadêmico desenvolvido com foco em boas práticas, organização de código e robustez no gerenciamento de dados locais.
