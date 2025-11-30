@@ -62,6 +62,7 @@ path_provider	Acesso ao sistema de arquivos
 intl	Formatação de datas
 google_fonts	Fonte Inter utilizada no UI
 ## 🗂️ Estrutura da Tabela (services)
+```
 Campo	Tipo	Descrição
 id	INTEGER	Chave primária (autoincremento)
 date	TEXT	Data de entrada (dd/MM/yyyy)
@@ -72,8 +73,8 @@ reason	TEXT	Motivo/defeito relatado
 servicePerformed	TEXT	Serviço executado
 value	REAL	Valor do serviço
 status	TEXT	pending, finalized, cancelled
-🔄 Migração Automática
-
+```
+## 🔄 Migração Automática
 Caso o banco seja detectado na versão 1, contendo o campo finalized, ele é automaticamente convertido para o novo campo status.
 
 ## 📦 Instalação e Execução
