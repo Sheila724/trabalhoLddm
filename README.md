@@ -114,6 +114,7 @@ ndkVersion = "27.0.12077973"
 Caso apareça erro referente ao NDK, instale esta versão pelo
 Android Studio → SDK Manager → SDK Tools → NDK (Side by side).
 
+```
 📂 Estrutura do Projeto
 lib/
 ├── main.dart               # Ponto de entrada
@@ -121,6 +122,8 @@ lib/
 ├── db/                     # Singleton + scripts de migração
 ├── pages/                  # Telas (Lista e Formulário)
 └── utils/                  # Exportação CSV e utilitários
+```
+
 
 💙 Desenvolvido com Flutter
 
