@@ -1,6 +1,6 @@
 ## 📱 Service App — Cadastro de Ordens de Serviço
-Aplicação Flutter desenvolvida para gerenciamento completo de ordens de serviço, com persistência local via SQLite, filtros avançados, controle de status e exportação de dados.
-Ideal para uso interno em assistências técnicas, suporte, manutenção e prestação de serviços.
+Aplicação Flutter desenvolvida para o gerenciamento completo de ordens de serviço, utilizando um banco de dados local (SQLite) para armazenar todas as informações de forma offline. Conta com filtros avançados, controle de status e exportação de dados.
+Ideal para assistências técnicas, serviços de manutenção e operações internas.
 ## 🚀 Funcionalidades Principais
 
 ### ✔️ CRUD Completo
@@ -55,12 +55,15 @@ Design limpo usando Google Fonts (Inter)
 
 Ações intuitivas como deslizar para excluir (Dismissible)
 ## 🛠️ Tecnologias Utilizadas
+```
 Tecnologia / Biblioteca	Uso
 Flutter & Dart	Base do aplicativo
 sqflite	Banco de dados SQLite local
 path_provider	Acesso ao sistema de arquivos
 intl	Formatação de datas
 google_fonts	Fonte Inter utilizada no UI
+```
+
 ## 🗂️ Estrutura da Tabela (services)
 ```
 Campo	Tipo	Descrição
@@ -89,6 +92,8 @@ Emulador ou dispositivo físico conectado
 
 ```bash
 git clone https://github.com/Sheila724/trabalhoLddm.git
+```
+```bash
 cd trabalhoLddm
 ```
 ## 📦 Instalar dependências
