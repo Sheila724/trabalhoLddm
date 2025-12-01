@@ -26,7 +26,6 @@ class DatabaseHelper {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const realType = 'REAL NOT NULL';
-    const realTypeNullable = 'REAL NOT NULL';
 
     await db.execute('''
       CREATE TABLE services (
@@ -45,17 +44,13 @@ class DatabaseHelper {
 
   Future _upgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // adiciona coluna status e migra valores a partir de 'finalized' (0/1)
       try {
         await db.execute("ALTER TABLE services ADD COLUMN status TEXT");
       } catch (_) {
-        // se já existir, ignore
       }
-      // popula status com base na coluna antiga 'finalized' quando disponível
       try {
         await db.execute("UPDATE services SET status = CASE WHEN finalized = 1 THEN 'finalized' ELSE 'pending' END WHERE status IS NULL");
       } catch (_) {
-        // se a coluna 'finalized' não existir, nada a fazer
       }
     }
   }
@@ -104,7 +99,6 @@ class DatabaseHelper {
       if (hasFinalized) {
         map['finalized'] = service.finalized ? 1 : 0;
       }
-      // ensure status column exists in map for new tables
       if (!map.containsKey('status')) map['status'] = service.status;
     } catch (_) {}
     return map;

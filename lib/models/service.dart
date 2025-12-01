@@ -2,14 +2,14 @@ import 'package:intl/intl.dart';
 
 class Service {
   int? id;
-  String date; // formato dd/MM/yyyy
+  String date; 
   String clientName;
   String deviceName;
   String serialNumber;
   String reason;
   String servicePerformed;
   double value;
-  String status; // 'finalized' | 'pending' | 'cancelled'
+  String status; 
 
   Service({
     this.id,
@@ -25,7 +25,6 @@ class Service {
   }) : status = status ?? (finalized ? 'finalized' : 'pending');
 
   factory Service.fromMap(Map<String, dynamic> map) {
-    // suporta esquemas antigos que usam 'finalized' (INTEGER 0/1) ou novos com 'status' (TEXT)
     String status;
     if (map.containsKey('status') && map['status'] != null) {
       status = map['status'] as String;
